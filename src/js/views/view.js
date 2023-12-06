@@ -12,6 +12,33 @@ export default class View {
         this._parentElement.insertAdjacentHTML('afterbegin', markup);
     }
 
+    update(data) {
+        this._data = data;
+        const newMarkup = this._generateMarkup();
+
+        // 1. Create "virtual" DOM from new markup
+        const newDOM = document.createRange().createContextualFragment(newMarkup);
+
+        // 2. Get elements of current DOM and new "virtual" DOM
+        const newElements = Array.from(newDOM.querySelectorAll('*'));
+        const curElements = Array.from(this._parentElement.querySelectorAll('*'));
+
+        // 3. Finally, compare them
+        newElements.forEach((newEl, i) => {
+            const curEl = curElements[i];
+
+            // 4. Update changed text only in those elements that are different and only contains text inside
+            if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== '') {
+                curEl.textContent = newEl.textContent;
+            }
+
+            // 5. Update changed attributes of buttons
+            if (!newEl.isEqualNode(curEl)) {
+                Array.from(newEl.attributes).forEach(attr => curEl.setAttribute(attr.name, attr.value));
+            }
+        });
+    }
+
     _clear() {
         this._parentElement.innerHTML = '';
     }
