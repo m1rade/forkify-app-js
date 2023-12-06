@@ -10,9 +10,9 @@ import searchView from './views/searchView.js';
 
 ///////////////////////////////////////
 
-if (module.hot) {
-    module.hot.accept();
-}
+// if (module.hot) {
+//     module.hot.accept();
+// }
 
 const controlRecipes = async function () {
     try {
@@ -28,6 +28,7 @@ const controlRecipes = async function () {
 
         // 2. Rendering recipe
         recipeView.render(model.state.recipe);
+        console.log(model.state.recipe);
     } catch (err) {
         recipeView.renderError();
     }
@@ -43,6 +44,7 @@ const controlSearchResults = async function () {
 
         // 2. Load search results
         await model.loadSearchResults(query);
+        console.log(model.state.search.results);
 
         // 3. Render results
         resultsView.render(model.getSearchResultPage());
