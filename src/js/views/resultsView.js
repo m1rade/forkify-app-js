@@ -1,4 +1,4 @@
-import icons from '../../img/icons.svg';
+import previewView from './previewView.js';
 import View from './view.js';
 
 class ResultsView extends View {
@@ -7,27 +7,7 @@ class ResultsView extends View {
     _message = '';
 
     _generateMarkup() {
-        return this._data.reduce(this._generateMarkupPreview, '');
-    }
-
-    _generateMarkupPreview(str, currResult) {
-        const id = window.location.hash.slice(1);
-
-        return (
-            str +
-            `
-        <li class="preview">
-          <a class="preview__link ${currResult.id === id ? 'preview__link--active' : ''}" href="#${currResult.id}">
-            <figure class="preview__fig">
-              <img src="${currResult.image_url}" alt="${currResult.title}" />
-            </figure>
-            <div class="preview__data">
-              <h4 class="preview__title">${currResult.title}</h4>
-              <p class="preview__publisher">${currResult.publisher}</p>
-            </div>
-          </a>
-        </li>`
-        );
+        return this._data.reduce((str, result) => str + previewView.render(result, false), '');
     }
 }
 
