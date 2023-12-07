@@ -1,4 +1,4 @@
-import { TIMEOUT_SEC } from './config.js';
+import { TIMEOUT_SEC, getPostRequestOptions } from './config.js';
 
 const timeout = function (s) {
     return new Promise(function (_, reject) {
@@ -8,9 +8,11 @@ const timeout = function (s) {
     });
 };
 
-export const getJSON = async function (url) {
+export const ajax = async function (url, payload = undefined) {
     try {
-        const resp = await Promise.race([fetch(url), timeout(TIMEOUT_SEC)]);
+        const fetchPromise = payload ? fetch(url, getPostRequestOptions(payload)) : fetch(url);
+
+        const resp = await Promise.race([fetchPromise, timeout(TIMEOUT_SEC)]);
         const data = await resp.json();
 
         if (!resp.ok) throw new Error(`${data.message} (${resp.status})`);
