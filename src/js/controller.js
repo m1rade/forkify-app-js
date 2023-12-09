@@ -1,6 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import { MODAL_CLOSE_SEC } from './config';
+import { MODAL_CLOSE_SEC, RENDER_ADD_RECIPE_FORM_SEC } from './config';
 import { wait } from './helpers.js';
 import * as model from './model.js';
 import addRecipeView from './views/addRecipeView.js';
