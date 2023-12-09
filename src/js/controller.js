@@ -113,7 +113,7 @@ const controlAddRecipe = async function (newRecipe) {
         await wait(MODAL_CLOSE_SEC);
         // Close window
         addRecipeView.toggleWindow();
-        await wait(0.6);
+        await wait(RENDER_ADD_RECIPE_FORM_SEC);
         // Render window again
         addRecipeView.render('render');
     } catch (err) {

@@ -10,3 +10,4 @@ export const getPostRequestOptions = body => ({
     body: JSON.stringify(body),
 });
 export const MODAL_CLOSE_SEC = 2.5;
+export const RENDER_ADD_RECIPE_FORM_SEC = 0.6;
