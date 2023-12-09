@@ -8,6 +8,8 @@ const timeout = function (s) {
     });
 };
 
+export const wait = s => new Promise(res => setTimeout(res, s * 1000));
+
 export const ajax = async function (url, payload = undefined) {
     try {
         const fetchPromise = payload ? fetch(url, getPostRequestOptions(payload)) : fetch(url);

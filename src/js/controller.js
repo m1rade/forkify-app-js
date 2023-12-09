@@ -1,6 +1,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { MODAL_CLOSE_SEC } from './config';
+import { wait } from './helpers.js';
 import * as model from './model.js';
 import addRecipeView from './views/addRecipeView.js';
 import bookmarkView from './views/bookmarkView.js';
@@ -100,9 +101,6 @@ const controlAddRecipe = async function (newRecipe) {
         // Render new recipe on UI
         recipeView.render(model.state.recipe);
 
-        // Clear inputs
-        addRecipeView.clearInputs();
-
         // Display success message
         addRecipeView.renderMessage();
 
@@ -112,8 +110,12 @@ const controlAddRecipe = async function (newRecipe) {
         // Change id in URL
         window.history.pushState(null, '', `#${model.state.recipe.id}`);
 
+        await wait(MODAL_CLOSE_SEC);
         // Close window
-        setTimeout(() => addRecipeView.toggleWindow(), MODAL_CLOSE_SEC * 1000);
+        addRecipeView.toggleWindow();
+        await wait(0.6);
+        // Render window again
+        addRecipeView.render('render');
     } catch (err) {
         addRecipeView.renderError(err.message);
     }
